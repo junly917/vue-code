@@ -9,7 +9,7 @@
     @close="handleClose"
     :collapse="isCollapse"
   >
-    <h3>{{ isCollapse ? '后台' : "多云管理系统" }}</h3>
+    <h3>{{ isCollapse ? "后台" : "多云管理系统" }}</h3>
 
     <el-menu-item
       v-for="item in noChildren"
@@ -34,7 +34,9 @@
         v-for="(subItem, subIndex) in item.children"
         :key="subItem.path"
       >
-        <el-menu-item :index="subIndex + ''">{{ subItem.label }}</el-menu-item>
+        <el-menu-item @click="clickMenu(subItem)" :index="subIndex + ''">{{
+          subItem.label
+        }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -117,10 +119,13 @@ export default {
       console.log(key, keyPath);
     },
     clickMenu(item) {
-      console.log(item);
+      console.log("clickMenu", item);
+      console.log("item.name: ", item.name.toLowerCase())
       this.$router.push({
-        name: item.name,
-      });
+        // name: item.name,
+        name: item.name.toLowerCase(),
+      }),
+      this.$store.commit('selectMenu', item)
     },
   },
   computed: {
